@@ -51,9 +51,8 @@
 }
 
 .description {
-  margin: 4rem 0;
   line-height: 1.5;
-  font-size: 1.5rem;
+  font-family: monospace, monospace
 }
 
 .code {

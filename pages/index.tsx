@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import Mint from '../components/Mint/minst'
+import Mint from '../components/Mint/mint'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
@@ -14,7 +14,8 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <Mint/>
+        <p className={styles.description}>this is mono</p>
+        <Mint />
       </main>
 
       <footer className={styles.footer}>
