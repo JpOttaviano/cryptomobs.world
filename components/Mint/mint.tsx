@@ -1,7 +1,7 @@
 import React, { useCallback, useReducer, useEffect } from 'react'
 import { ethers } from 'ethers'
 import Button from '@mui/material/Button'
-import WalletLink from 'walletLink'
+import WalletLink from 'walletlink'
 
 import Web3Modal from 'web3modal'
 
