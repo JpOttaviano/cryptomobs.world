@@ -13,7 +13,7 @@ import MintModal from './mintModal'
 
 declare var window: any
 
-const INFURA_ID = '7f20a7660ae744c4ab9346e1ad027454'
+const { INFURA_ID } = process.env
 
 const providerOptions = {
   walletconnect: {
@@ -143,7 +143,7 @@ export default function Mint({}) {
     contract,
     signer,
   } = state
-  const [goerliSupply, setGoerliSupply] = React.useState(0)
+  const [gerliSupply, setGerliSupply] = React.useState(0)
 
   const connect = useCallback(async function () {
     // This is the initial `provider` that is returned when
@@ -166,11 +166,15 @@ export default function Mint({}) {
     const contract = new ethers.Contract(
       CONTRACT_ADDRESS,
       CONTRACT_ABI,
-      web3Provider
+      signer
     )
 
     const grlySup = ethers.utils.formatUnits(await contract.totalSupply())
-    setGoerliSupply(Number(grlySup))
+    setGerliSupply(Number(grlySup))
+
+    //const greet = (await contract.greet()).toString()
+    //setGreet(greet)
+    // TODO: review get balance for signer
 
     dispatch({
       type: 'SET_WEB3_PROVIDER',
@@ -235,6 +239,8 @@ export default function Mint({}) {
       provider.on('chainChanged', handleChainChanged)
       provider.on('disconnect', handleDisconnect)
 
+      // TODO add contracts listeners 
+
       // Subscription Cleanup
       return () => {
         if (provider.removeListener) {
@@ -252,8 +258,8 @@ export default function Mint({}) {
         <Button onClick={connect}>Connect</Button>
       ) : (
         <div>
-          <h1>GoerlySuppli</h1>
-          <h2>{goerliSupply}</h2>
+          <h1>Goerly supply</h1>
+          <h2>{gerliSupply}</h2>
           <h1>Network</h1>
           {network}
           <h1>balance</h1>

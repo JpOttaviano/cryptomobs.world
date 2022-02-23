@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = '0x7af963cF6D228E564e2A0aA0DdBF06210B38615D'
+export const CONTRACT_ADDRESS = '0x7af963cf6d228e564e2a0aa0ddbf06210b38615d'
 
 export const CONTRACT_ABI = [
   // mint the amount of nfts specified
@@ -15,4 +15,16 @@ export const CONTRACT_ABI = [
 
   // Goerli contract text name func
   'function name() public view returns (string memory)',
+
+  // Greeter func get
+  'function greet() public view returns (string memory)',
+
+  // Set greeter func
+  'function setGreeting(string memory _greeting) public',
+
+  // test nft mint
+  'function mintNFTs(uint _count) public payable',
+
+  // test nft balance
+  'function tokensOfOwner(address _owner) external view returns (uint[] memory)'
 ]

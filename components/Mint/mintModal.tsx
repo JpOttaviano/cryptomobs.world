@@ -8,13 +8,13 @@ import {
   Container,
   Divider,
   FormControlLabel,
-  Grid,
   Link,
   Modal,
   Paper,
   TextField,
   Typography,
 } from '@mui/material'
+import Grid from '@material-ui/core/Grid';
 import { width } from '@mui/system'
 import { ethers } from 'ethers'
 import React, { useCallback, useEffect } from 'react'
@@ -26,11 +26,12 @@ const containerStyle = {
   transform: 'translate(-50%, -50%)',
   width: '75vh',
   height: '60vh',
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
+  //border: '2px solid #000',
+  backgroundImage: 'url(modalbckgredo.png)',
+  backgroundPosition: 'center', /* Center the image */
+  backgroundRepeat: 'no-repeat', /* Do not repeat the image */
+  backgroundSize: '75%',
   p: 4,
-  backgroundImage: '',
 }
 
 export default function MintModal({
@@ -47,9 +48,16 @@ export default function MintModal({
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
+  const triggerMint = async (count: number) => {
+    //await contract.setGreeting('No MOre mr good hardhat')
+    setOpen(false)
+  }
+
   useEffect(() => {
     contract.connect(signer)
     // contract.name().then(name => { setGrlyName(name) })
+
+    // TODO add contract listeners ?
   }, [])
 
   return (
@@ -61,11 +69,32 @@ export default function MintModal({
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
         sx={{
-          backgroundImage: '',
+          backgroundColor: 'transparent',
         }}
       >
-        <Box sx={containerStyle}>
-          <Container sx={{ transform: 'translate(20%, 40%)' }}>
+       
+          <Container sx={containerStyle}>
+          <Grid
+          container
+          spacing={1}
+          direction="column"
+          alignItems="center"
+          justify="center"
+        >
+          <Grid
+          container
+          spacing={0}
+          direction="row"
+          alignItems="center"
+          justify="center"
+        >
+
+          <Grid item xs={8}>
+            <Card
+              sx={{
+                borderRadius: 4,
+              }}
+            >
             <Typography id="modal-modal-title" variant="h6" component="h2">
               Select an amount to mint
             </Typography>
@@ -74,8 +103,12 @@ export default function MintModal({
               label="Amount"
               type="number"
               sx={{ mt: 5, ml: 5 }}
-              InputLabelProps={{
-                shrink: true,
+              
+              InputProps={{
+                inputProps: {
+                  min: 0,
+                  max: 5,
+                },
               }}
               variant="standard"
             />
@@ -83,12 +116,16 @@ export default function MintModal({
               variant="outlined"
               color="secondary"
               sx={{ mt: 15, ml: -15 }}
-              onClick={() => {}}
+              onClick={() => triggerMint(1)}
             >
               MINT
             </Button>
-          </Container>
-        </Box>
+          </Card>
+          </Grid>
+          </Grid>
+        </Grid>
+        </Container>
+        
       </Modal>
     </div>
   )
