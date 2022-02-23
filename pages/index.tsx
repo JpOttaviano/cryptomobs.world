@@ -12,6 +12,11 @@ const texts = [
   is happening.
   The sheer amount of escaping monster is just to much to fight off, without counting the offspring they are alying outside the dungeons.
   `,
+  `The kingdome came up with an alternative solution to the problem: Integration. 
+  The "Adopt-a-Mob" initiative came to be. All citizens of the kingdome are encouraged to adopt a monster, teach them the human ways, and try to 
+  make them porductive members of society. Not only would this solve the monster overpopulation but, In time, the union between monsters and humans would prove beneficial for both.`,
+
+  `You can now adopt one of 5 type of monsters, each unique in their own way, and help relieve the monster exodus issue, while the kingdom keeps investigation the root cause.`
 ]
 
 const Home: NextPage = () => {
@@ -56,6 +61,9 @@ const Home: NextPage = () => {
               <Parallax translateY={[-50,-115]} className={styles.transitionbottom}>
                 <Image src="/caveTransitionbottom.png" width={2200} height={1350}/>
                 <Parallax translateY={[-95,-120]} className={styles.transitiontop}>
+                <div className={styles.transitiontext}>
+                    {texts[1]}
+                  </div>
                   <Image src="/caveTransitiontop.png" width={2200} height={1350}/>
                 </Parallax>
               </Parallax>
@@ -65,19 +73,21 @@ const Home: NextPage = () => {
               <Parallax translateY={[-50,-118]} className={styles.transitionbottom}>
                 <Image src="/caveTransitionbottom.png" width={2200} height={1350}/>
                 <Parallax translateY={[-95,-118]} className={styles.transitiontop}>
+                <div className={styles.transitiontext}>
+                    {texts[2]}
+                  </div>
                   <Image src="/caveTransitiontop.png" width={2200} height={1350}/>
                 </Parallax>
               </Parallax>
               <div className={styles.cavetop}>
                 <Image  src="/endtop.png" width={2400} height={1650}/>
               </div>
-              <div className={styles.cavemiddletop}>
+              <Parallax translateY={[15,-28]} className={styles.cavemiddletop}>
                 <Image  src="/endmiddletop.png" width={2400} height={1650}/>
-              </div>
-              <div className={styles.cavemiddlebottom}>
+              </Parallax>
+              <Parallax translateY={[20,-31]} className={styles.cavemiddlebottom}>
                 <Image  src="/endmiddlebottom.png" width={2400} height={1650}/>
-              </div>
-              
+                </Parallax>
                 <Image  src="/endbackcolor.png" width={2400} height={1650}/>
             </Grid>
           </Grid>
