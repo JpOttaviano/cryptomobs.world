@@ -1,5 +1,4 @@
 import React, { useCallback, useReducer, useEffect } from 'react'
-import { Web3Provider } from '@ethersproject/providers'
 import { ethers } from 'ethers'
 import Button from '@mui/material/Button'
 import WalletLink from 'walletLink'
