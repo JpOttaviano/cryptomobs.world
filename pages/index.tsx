@@ -1,25 +1,35 @@
-import { Grid, Typography } from '@mui/material'
+import { Button, Grid, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useRef } from 'react'
 import { Parallax, useParallax } from 'react-scroll-parallax'
 import Mint from '../components/Mint/mint'
 import styles from '../styles/Home.module.css'
 
 const texts = [
-  `Monsters are escaping the dungeons on a massive exodus never before seen. The kingdom has sent its brightest minds to investigate why this
-  is happening.
-  The sheer amount of escaping monster is just to much to fight off, without counting the offspring they are alying outside the dungeons.
+  `Monsters are escaping the dungeons on a massive exodus never before seen. 
+  The sheer amount of monsters roaming the land is just to much to fight off.
+  Without mediation, a massive conflict between species is inminent.
   `,
-  `The kingdome came up with an alternative solution to the problem: Integration. 
-  The "Adopt-a-Mob" initiative came to be. All citizens of the kingdome are encouraged to adopt a monster, teach them the human ways, and try to 
-  make them porductive members of society. Not only would this solve the monster overpopulation but, In time, the union between monsters and humans would prove beneficial for both.`,
+  `The King proposed an alternative solution to the problem: Integration. 
+  The "Adopt-a-Mob" initiative came to be. All citizens of the kingdom are encouraged to adopt a monster, teach them the human ways while learning theirs and try to 
+  adapt them into our society. Not only would this solve the monster overpopulation problem but the union between monsters and humans would also prove beneficial for both.`,
 
-  `You can now adopt one of 5 type of monsters, each unique in their own way, and help relieve the monster exodus issue, while the kingdom keeps investigation the root cause.`
+  `An initial bunch of 10 thousand monsters of 5 different species agreed to the initiave to prove that co-existing is possible.
+   Help relieve the monster overpopulation issue, while the kingdom keeps investigating the root cause of the monster dungeon exodus.
+   `
 ]
 
+const imgRes = {
+  width: 2400,
+  height: 1350,
+}
+
 const Home: NextPage = () => {
+
+  const router = useRouter()
   return (
     <div className={styles.container} style={{
     }}>
@@ -37,8 +47,15 @@ const Home: NextPage = () => {
             direction="column"
           >
             <Grid item>
-              <div className={styles.title}>
-               <Image src="/titlecryptomobs.png" width={2400} height={1350}/>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {router.push('/adopt')}}
+                >
+                  Mint
+                </Button>
+              <div className={styles.titlesign}>
+               <Image src="/cryptomobstitle.png" width={1200} height={246} layout='fixed'/>
               </div>
               <Image src="/landingHeader.png" width={2400} height={1350}/>
               
@@ -47,8 +64,14 @@ const Home: NextPage = () => {
               <Parallax translateY={[-50,-125]} className={styles.transitionbottom}>
                 <Image src="/caveTransitionbottom.png" width={2200} height={1350}/>
                 <Parallax translateY={[-95,-120]} className={styles.transitiontop}>
-                <div className={styles.transitiontext}>
-                    {texts[0]}
+                  <div className={styles.transitiontext}>
+                    Monsters are escaping the dungeons on a massive exodus never before seen.
+                    The cause remains a mystery so far.
+                    <p/>
+                    The sheer amount of monsters roaming the land is just to much to fight off.
+                    Without mediation, a massive conflict between species is inminent.
+                    <p/>
+                    Luckily, the King came up with a peaceful solution.
                   </div>
                   <Image src="/caveTransitiontop.png" width={2200} height={1350}/>
                   
@@ -58,23 +81,34 @@ const Home: NextPage = () => {
               <Image src="/landingDesigns.png" width={2400} height={1350}/>
             </Grid>
             <Grid item>
-              <Parallax translateY={[-50,-115]} className={styles.transitionbottom}>
+              <Parallax translateY={[-50,-120]} className={styles.transitionbottom}>
                 <Image src="/caveTransitionbottom.png" width={2200} height={1350}/>
                 <Parallax translateY={[-95,-120]} className={styles.transitiontop}>
-                <div className={styles.transitiontext}>
-                    {texts[1]}
+                  <div className={styles.transitiontext}>
+                    The King proposed an alternative solution to the problem: Integration.
+                    <br/>
+                    The "Adopt-a-Mob" initiative came to be. All citizens of the kingdom are encouraged to adopt a monster, teach them the human ways while learning theirs and try to 
+                    adapt them into our society. 
+                    <p/>
+                    Not only would this solve the monster overpopulation problem but the union between monsters and humans would also prove beneficial for both.
                   </div>
                   <Image src="/caveTransitiontop.png" width={2200} height={1350}/>
                 </Parallax>
               </Parallax>
-              <Image src="/cavePreview.png" width={2400} height={1350}/>
+              <div className={styles.cavecenter}>
+              <Image src="/cavePreview.png" width={1280} height={720} layout='fixed'/>
+              </div>
             </Grid>
             <Grid item>
-              <Parallax translateY={[-50,-118]} className={styles.transitionbottom}>
+              <Parallax translateY={[-40,-115]} className={styles.transitionbottom}>
                 <Image src="/caveTransitionbottom.png" width={2200} height={1350}/>
                 <Parallax translateY={[-95,-118]} className={styles.transitiontop}>
-                <div className={styles.transitiontext}>
-                    {texts[2]}
+                  <div className={styles.transitiontext}>
+                    An initial bunch of 10 thousand monsters of 5 different species agreed to the initiave to prove that co-existing is possible.
+                    <br/>
+                    You can adopt one of the unique monsters and help humans and monsters close the gap between species.
+                    <p/>
+                    Help relieve the monster overpopulation issue, while the kingdom keeps investigating the root cause of the monster dungeon exodus.
                   </div>
                   <Image src="/caveTransitiontop.png" width={2200} height={1350}/>
                 </Parallax>
@@ -88,7 +122,7 @@ const Home: NextPage = () => {
               <Parallax translateY={[20,-31]} className={styles.cavemiddlebottom}>
                 <Image  src="/endmiddlebottom.png" width={2400} height={1650}/>
                 </Parallax>
-                <Image  src="/endbackcolor.png" width={2400} height={1650}/>
+                <Image src="/endbackcolor.png" width={2400} height={1650}/>
             </Grid>
           </Grid>
         </div>

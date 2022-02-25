@@ -2,6 +2,7 @@ import React, { useCallback, useReducer, useEffect } from 'react'
 import { ethers } from 'ethers'
 import Button from '@mui/material/Button'
 import WalletLink from 'walletlink'
+import Image from 'next/image'
 
 import Web3Modal from 'web3modal'
 
@@ -9,6 +10,8 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from './contract'
 
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import MintModal from './mintModal'
+import styles from '../../styles/Home.module.css'
+import caveImage from '../../public/escapecave.png'
 
 declare var window: any
 
@@ -91,7 +94,7 @@ type ActionType =
 
 const initialState: StateType = {
   provider: null,
-  web3Provider: null,
+  web3Provider: '',
   signer: null,
   address: '',
   chainId: 0,
@@ -142,17 +145,19 @@ export default function Mint({}) {
     contract,
     signer,
   } = state
-  const [gerliSupply, setGerliSupply] = React.useState(0)
+  const [minted, setMinted] = React.useState(0)
+  const [supply, setSupply] = React.useState(0)
 
   const connect = useCallback(async function () {
     // This is the initial `provider` that is returned when
     // using web3Modal to connect. Can be MetaMask or WalletConnect.
-    const provider = await web3Modal.connect()
+    // const provider = await web3Modal.connect()
 
     // We plug the initial `provider` into ethers.js and get back
     // a Web3Provider. This will add on methods from ethers.js and
     // event listeners such as `.on()` will be different.
-    const web3Provider = new ethers.providers.Web3Provider(provider)
+    
+    /*const web3Provider = new ethers.providers.Web3Provider(provider)
 
     const signer = web3Provider.getSigner()
     const address = await signer.getAddress()
@@ -160,16 +165,19 @@ export default function Mint({}) {
     const network = await web3Provider.getNetwork()
     const balance = Number(
       ethers.utils.formatEther(await web3Provider.getBalance(address))
-    )
+    )*/
 
     const contract = new ethers.Contract(
       CONTRACT_ADDRESS,
       CONTRACT_ABI,
-      signer
+      //signer
     )
 
-    const grlySup = ethers.utils.formatUnits(await contract.totalSupply())
-    setGerliSupply(Number(grlySup))
+    //const minted = await contract.balanceOf(address)
+    //setMinted(Number(minted))
+
+    const supply = await contract.totalSupply()
+    setSupply(Number(supply))
 
     //const greet = (await contract.greet()).toString()
     //setGreet(greet)
@@ -180,8 +188,10 @@ export default function Mint({}) {
       provider,
       web3Provider,
       address,
-      network: network.name,
-      chainId: network.chainId,
+      //network: network.name,
+      //chainId: network.chainId,
+      network: 'mainnet',
+      chainId: 0,
       balance,
       contract,
       signer,
@@ -221,6 +231,7 @@ export default function Mint({}) {
           type: 'SET_ADDRESS',
           address: accounts[0],
         })
+        window.location.reload()
       }
 
       // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
@@ -232,9 +243,12 @@ export default function Mint({}) {
         // eslint-disable-next-line no-console
         console.log('disconnect', error)
         disconnect()
+        window.location.reload()
       }
 
-      provider.on('accountsChanged', handleAccountsChanged)
+      //window.ethereum.on('accountsChanged', handleAccountsChanged)
+
+      /*provider.on('accountsChanged', handleAccountsChanged)
       provider.on('chainChanged', handleChainChanged)
       provider.on('disconnect', handleDisconnect)
 
@@ -247,18 +261,21 @@ export default function Mint({}) {
           provider.removeListener('chainChanged', handleChainChanged)
           provider.removeListener('disconnect', handleDisconnect)
         }
-      }
+      }*/
     }
   }, [provider, disconnect])
 
   return (
-    <div>
-      {!web3Provider ? (
+    <div className={styles.description}>
+      <Image src={caveImage} alt="logo" width={2400} height={1200}/>
+      {false ? (
         <Button onClick={connect}>Connect</Button>
       ) : (
         <div>
-          <h1>Goerly supply</h1>
-          <h2>{gerliSupply}</h2>
+          <h1>Total supply</h1>
+          <h2>{supply}</h2>
+          <h1>You minted: </h1>
+          <h2>{minted}</h2>
           <h1>Network</h1>
           {network}
           <h1>balance</h1>

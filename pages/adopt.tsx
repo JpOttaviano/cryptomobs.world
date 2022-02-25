@@ -4,8 +4,11 @@ import Image from 'next/image'
 
 import Mint from '../components/Mint/mint'
 import Head from 'next/head'
+import { Button } from '@mui/material'
+import { useRouter } from 'next/router'
 
 const Adopt: NextPage = () => {
+  const router = useRouter()
   return (
     <div className={styles.container}>
       <Head>
@@ -16,6 +19,13 @@ const Adopt: NextPage = () => {
 
       <main className={styles.main}>
         <p className={styles.description}>this is mono</p>
+        <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => {router.push('/adopt')}}
+                >
+                  Home
+                </Button>
         <Mint />
       </main>
 

@@ -17,7 +17,7 @@
   position: relative;
   flex: 1;
   padding: 2rem 0;
-  border-top: 1px solid #eaeaea;
+  color: #fafafa;
   justify-content: center;
   align-items: center;
 }
@@ -29,12 +29,23 @@
   flex-grow: 1;
 }
 
-.title {
+.titlesign {
   position: absolute;
-  top: -250px;
+  transform: translate(16%, 2%);
   left: 0;
   width: 100%;
   height: 100%;
+  z-index: 1;
+}
+
+
+
+.homemint {
+  position: ab;
+  left: 500px;
+  width: 100%;
+  height: 100%;
+  align-content: flex-start;
   z-index: 1;
 }
 
@@ -48,16 +59,22 @@
 }
 
 .transitiontext{
-  position: relative;
+  position: absolute;
   z-index: 7;
   margin-left: 15%;
   margin-right: 15%;
-  font-family: "ＭＳ Ｐゴシック";
+  font-family: monospace, monospace;
   font-size: 2rem;
   color: #fff;
   text-align: center;
-  justify-content: center;
-  top: 34rem;
+  vertical-align: middle;
+  top: 38%;
+}
+
+.cavecenter{
+  text-align: center;
+  vertical-align: middle;
+
 }
 
 .cavetop {
@@ -80,6 +97,36 @@
   text-decoration: none;
 }
 
+.modalgriditem {
+  display: flex;
+  width: '20vh';
+  height: '52vh';
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+  text-align: center;
+  font-family: monospace, monospace;
+  font-size: larger;
+}
+
+.modalclose {
+  display: flex;
+  justify-content: flex-start;
+  align-items: left 
+}
+
+.modalgridimage {
+  display: flex;
+  width: '30vh';
+  height: '51vh';
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+  text-align: center;
+  left: 200rem;
+  transform: translate(0, 1%),
+}
+
 .title a:hover,
 .title a:focus,
 .title a:active {
@@ -99,7 +146,8 @@
 
 .description {
   line-height: 1.5;
-  font-family: monospace, monospace
+  font-family: monospace, monospace;
+  color: #fafafa
 }
 
 .code {
@@ -152,6 +200,7 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
+  filter: invert(100%);
 }
 
 @media (max-width: 600px) {

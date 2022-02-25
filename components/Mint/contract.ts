@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = '0x7af963cf6d228e564e2a0aa0ddbf06210b38615d'
+export const CONTRACT_ADDRESS = '0x06012c8cf97BEaD5deAe237070F9587f8E7A266d'
 
 export const CONTRACT_ABI = [
   // mint the amount of nfts specified
@@ -27,4 +27,5 @@ export const CONTRACT_ABI = [
 
   // test nft balance
   'function tokensOfOwner(address _owner) external view returns (uint[] memory)'
+
 ]

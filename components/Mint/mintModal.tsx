@@ -9,19 +9,24 @@ import {
 import Grid from '@material-ui/core/Grid';
 import { ethers } from 'ethers'
 import React, { useCallback, useEffect } from 'react'
+import Image from 'next/image';
+
+import modalImage from '../../public/mintModa.png'
+import styles from '../../styles/Home.module.css'
 
 const containerStyle = {
   position: 'absolute' as 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '75vh',
-  height: '60vh',
+  //width: '75vh',
+  //height: '60vh',
   //border: '2px solid #000',
-  backgroundImage: 'url(modalbckgredo.png)',
+  //backgroundImage: 'url(modalbckgredo.png)',
   backgroundPosition: 'center', /* Center the image */
   backgroundRepeat: 'no-repeat', /* Do not repeat the image */
   backgroundSize: '75%',
+  color: '#fafafa',
   p: 4,
 }
 
@@ -40,12 +45,12 @@ export default function MintModal({
   const handleClose = () => setOpen(false)
 
   const triggerMint = async (count: number) => {
-    //await contract.setGreeting('No MOre mr good hardhat')
+    //await contract.mint(count)
     setOpen(false)
   }
 
   useEffect(() => {
-    contract.connect(signer)
+    //contract.connect(signer)
     // contract.name().then(name => { setGrlyName(name) })
 
     // TODO add contract listeners ?
@@ -63,60 +68,88 @@ export default function MintModal({
           backgroundColor: 'transparent',
         }}
       >
-       
-          <Container sx={containerStyle}>
+       <Container style={containerStyle}>
           <Grid
-          container
-          spacing={1}
-          direction="column"
-          alignItems="center"
-          justify="center"
-        >
-          <Grid
-          container
-          spacing={0}
-          direction="row"
-          alignItems="center"
-          justify="center"
-        >
+            container
+            spacing={0}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item className={styles.modalgridimage}>
+              <div style={{
+                transform: 'translate(0, 1.5%)',
+              }}>
+                <Image src={modalImage} alt='Modal image' width={300} height={500} layout='fixed'/>
+              </div>
+            </Grid>
+            <Grid item className={styles.modalgriditem}>
 
-          <Grid item xs={8}>
-            <Card
-              sx={{
-                borderRadius: 4,
-              }}
-            >
-            <Typography id="modal-modal-title" variant="h6" component="h2">
-              Select an amount to mint
-            </Typography>
-            <TextField
-              id="amount"
-              label="Amount"
-              type="number"
-              sx={{ mt: 5, ml: 5 }}
-              
-              InputProps={{
-                inputProps: {
-                  min: 0,
-                  max: 5,
-                },
-              }}
-              variant="standard"
-            />
-            <Button
-              variant="outlined"
-              color="secondary"
-              sx={{ mt: 15, ml: -15 }}
-              onClick={() => triggerMint(1)}
-            >
-              MINT
-            </Button>
-          </Card>
+              <Card
+                sx={{
+                  borderLeft:0,
+                  borderRadius: 0,
+                  width: '30vh',
+                  height: '50.3vh',
+                }}
+              >
+                <Grid 
+                  container 
+                  spacing={5} 
+                  direction='column'
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  <Grid item md>
+                    <Button
+                      className={styles.modalclosebutton}
+                      variant="contained"
+                      color="primary"
+                      onClick={handleClose}
+                    >
+
+                    </Button>
+                    <div
+                      style={{
+                        height: 100,
+                      }}
+                    ></div>
+                  </Grid>
+                  <Grid item xs>
+                    Select amount to mint
+                  </Grid>
+                  <Grid item xs>
+                    <TextField
+                      sx={{
+                        width: 100,
+                        alignContent: 'center',
+                      }}
+                      id="amount"
+                      label="Amount"
+                      type="number"                  
+                      InputProps={{
+                        inputProps: {
+                          min: 0,
+                          max: 5,
+                        },
+                      }}
+                      variant="standard"
+                    />
+                  </Grid>
+                  <Grid item xs>
+                    <Button
+                      variant="outlined"
+                      color="secondary"
+                      onClick={() => triggerMint(2)}
+                    >
+                      MINT
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Card>
+            </Grid>
           </Grid>
-          </Grid>
-        </Grid>
         </Container>
-        
       </Modal>
     </div>
   )
