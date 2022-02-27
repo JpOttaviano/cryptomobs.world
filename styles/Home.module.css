@@ -4,7 +4,6 @@
 }
 
 .main {
-  min-height: 100vh;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -30,15 +29,22 @@
 }
 
 .titlesign {
-  position: absolute;
-  transform: translate(16%, 2%);
-  left: 0;
-  width: 100%;
-  height: 100%;
+  position: absolute; 
+  left: 50%; 
+  transform: translate(-50%, 10%);
   z-index: 1;
 }
 
+.skybckg{
+  background-color: #c6fdff;
+  height: 10vh;
+  width: 100%;
+  position: relative;
+}
 
+.flipimage {
+  transform: scale(-1,1);
+}
 
 .homemint {
   position: ab;
@@ -50,21 +56,37 @@
 }
 
 .transitionbottom{
-  position: absolute;
+  background-color: #0f0e1a;
+  position: relative;
   z-index: 5;
 }
 .transitiontop{
   position: absolute;
   z-index: 6;
 }
+.outertransition {
+  background-color: #0f0e1a;
+  position: relative;
+  z-index: 7;
+}
+
+.innertransition{
+  background-color: #262439;
+  position: inherit;
+  z-index: 6;
+}
+
+.backgroundimage{
+  position: absolute;
+}
 
 .transitiontext{
-  position: absolute;
+  position: relative;
   z-index: 7;
   margin-left: 15%;
   margin-right: 15%;
   font-family: monospace, monospace;
-  font-size: 2rem;
+  font-size: calc(1em + 1vmin);
   color: #fff;
   text-align: center;
   vertical-align: middle;
@@ -147,7 +169,20 @@
 .description {
   line-height: 1.5;
   font-family: monospace, monospace;
-  color: #fafafa
+  color: #fafafa;
+  text-align: center;
+}
+
+.backgroundimage {
+  position: absolute;
+}
+
+.overindex {
+  z-index: 1;
+}
+
+.infocard {
+  color: #fafafa;
 }
 
 .code {

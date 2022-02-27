@@ -26,6 +26,5 @@ export const CONTRACT_ABI = [
   'function mintNFTs(uint _count) public payable',
 
   // test nft balance
-  'function tokensOfOwner(address _owner) external view returns (uint[] memory)'
-
+  'function tokensOfOwner(address _owner) external view returns (uint[] memory)',
 ]

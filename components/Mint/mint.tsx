@@ -12,6 +12,9 @@ import WalletConnectProvider from '@walletconnect/web3-provider'
 import MintModal from './mintModal'
 import styles from '../../styles/Home.module.css'
 import caveImage from '../../public/escapecave.png'
+import InfoCard from './infoCard'
+import { Grid } from '@mui/material'
+import { flexbox } from '@mui/system'
 
 declare var window: any
 
@@ -99,7 +102,7 @@ const initialState: StateType = {
   address: '',
   chainId: 0,
   network: 'none',
-  balance: -1,
+  balance: 0,
 }
 
 function reducer(state: StateType, action: ActionType): StateType {
@@ -147,6 +150,7 @@ export default function Mint({}) {
   } = state
   const [minted, setMinted] = React.useState(0)
   const [supply, setSupply] = React.useState(0)
+  const [available, setAvailable] = React.useState(0)
 
   const connect = useCallback(async function () {
     // This is the initial `provider` that is returned when
@@ -156,7 +160,7 @@ export default function Mint({}) {
     // We plug the initial `provider` into ethers.js and get back
     // a Web3Provider. This will add on methods from ethers.js and
     // event listeners such as `.on()` will be different.
-    
+
     /*const web3Provider = new ethers.providers.Web3Provider(provider)
 
     const signer = web3Provider.getSigner()
@@ -169,18 +173,20 @@ export default function Mint({}) {
 
     const contract = new ethers.Contract(
       CONTRACT_ADDRESS,
-      CONTRACT_ABI,
-      //signer
+      CONTRACT_ABI
+      // signer
     )
 
-    //const minted = await contract.balanceOf(address)
-    //setMinted(Number(minted))
+    // const minted = await contract.balanceOf(address)
+    // setMinted(Number(minted))
 
-    const supply = await contract.totalSupply()
-    setSupply(Number(supply))
+    const bigintsupply = await contract.totalSupply()
+    setSupply(Number(bigintsupply))
 
-    //const greet = (await contract.greet()).toString()
-    //setGreet(greet)
+    setAvailable(10000 - supply)
+
+    // const greet = (await contract.greet()).toString()
+    // setGreet(greet)
     // TODO: review get balance for signer
 
     dispatch({
@@ -188,8 +194,8 @@ export default function Mint({}) {
       provider,
       web3Provider,
       address,
-      //network: network.name,
-      //chainId: network.chainId,
+      // network: network.name,
+      // chainId: network.chainId,
       network: 'mainnet',
       chainId: 0,
       balance,
@@ -246,13 +252,13 @@ export default function Mint({}) {
         window.location.reload()
       }
 
-      //window.ethereum.on('accountsChanged', handleAccountsChanged)
+      // window.ethereum.on('accountsChanged', handleAccountsChanged)
 
       /*provider.on('accountsChanged', handleAccountsChanged)
       provider.on('chainChanged', handleChainChanged)
       provider.on('disconnect', handleDisconnect)
 
-      // TODO add contracts listeners 
+      // TODO add contracts listeners
 
       // Subscription Cleanup
       return () => {
@@ -267,30 +273,64 @@ export default function Mint({}) {
 
   return (
     <div className={styles.description}>
-      <Image src={caveImage} alt="logo" width={2400} height={1200}/>
-      {false ? (
-        <Button onClick={connect}>Connect</Button>
-      ) : (
-        <div>
-          <h1>Total supply</h1>
-          <h2>{supply}</h2>
-          <h1>You minted: </h1>
-          <h2>{minted}</h2>
-          <h1>Network</h1>
-          {network}
-          <h1>balance</h1>
-          {balance}
-          <h1>Address</h1>
-          {address}
-          <Button onClick={disconnect}>Disconect</Button>
+      <div className={styles.description}>
+        {false ? (
+          <Button onClick={connect}>Connect</Button>
+        ) : (
+          <div>
+            <Grid container={true} direction="row" spacing={10}>
+              <Grid item={true}>
+                <InfoCard
+                  elem={
+                    <div>
+                      <h1>Total minted</h1>
+                      <h1>{supply}</h1>
+                    </div>
+                  }
+                />
+              </Grid>
+              <Grid item={true}>
+                <InfoCard
+                  elem={
+                    <div>
+                      <h1>You Own</h1>
+                      <h1>{balance}</h1>
+                    </div>
+                  }
+                />
+              </Grid>
+              <Grid item={true}>
+                <InfoCard
+                  elem={
+                    <div>
+                      <h1>Available</h1>
+                      <h1>{available}</h1>
+                    </div>
+                  }
+                />
+              </Grid>
+            </Grid>
+            <Grid container={true} direction="row" spacing={10} display="flex">
+              <Grid item={true} justifyContent="flex-start">
+                <h1>Address</h1>
+                {address}
+              </Grid>
+              <Grid item={true} justifyContent="flex-end">
+                <h1>Contract Address</h1>
+                {CONTRACT_ADDRESS}
+              </Grid>
+            </Grid>
 
-          <MintModal
-            provider={web3Provider}
-            contract={contract}
-            signer={signer}
-          />
-        </div>
-      )}
+            <Button onClick={disconnect}>Disconect</Button>
+
+            <MintModal
+              provider={web3Provider}
+              contract={contract}
+              signer={signer}
+            />
+          </div>
+        )}
+      </div>
     </div>
   )
 }

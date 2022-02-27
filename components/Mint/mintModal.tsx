@@ -6,10 +6,10 @@ import {
   TextField,
   Typography,
 } from '@mui/material'
-import Grid from '@material-ui/core/Grid';
+import Grid from '@material-ui/core/Grid'
 import { ethers } from 'ethers'
 import React, { useCallback, useEffect } from 'react'
-import Image from 'next/image';
+import Image from 'next/image'
 
 import modalImage from '../../public/mintModa.png'
 import styles from '../../styles/Home.module.css'
@@ -19,12 +19,12 @@ const containerStyle = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  //width: '75vh',
-  //height: '60vh',
-  //border: '2px solid #000',
-  //backgroundImage: 'url(modalbckgredo.png)',
-  backgroundPosition: 'center', /* Center the image */
-  backgroundRepeat: 'no-repeat', /* Do not repeat the image */
+  // width: '75vh',
+  // height: '60vh',
+  // border: '2px solid #000',
+  // backgroundImage: 'url(modalbckgredo.png)',
+  backgroundPosition: 'center' /* Center the image */,
+  backgroundRepeat: 'no-repeat' /* Do not repeat the image */,
   backgroundSize: '75%',
   color: '#fafafa',
   p: 4,
@@ -45,14 +45,13 @@ export default function MintModal({
   const handleClose = () => setOpen(false)
 
   const triggerMint = async (count: number) => {
-    //await contract.mint(count)
+    // await contract.mint(count)
     setOpen(false)
   }
 
   useEffect(() => {
-    //contract.connect(signer)
+    // contract.connect(signer)
     // contract.name().then(name => { setGrlyName(name) })
-
     // TODO add contract listeners ?
   }, [])
 
@@ -68,57 +67,56 @@ export default function MintModal({
           backgroundColor: 'transparent',
         }}
       >
-       <Container style={containerStyle}>
+        <Container style={containerStyle}>
           <Grid
-            container
+            container={true}
             spacing={0}
             direction="row"
             justifyContent="center"
             alignItems="center"
           >
-            <Grid item className={styles.modalgridimage}>
-              <div style={{
-                transform: 'translate(0, 1.5%)',
-              }}>
-                <Image src={modalImage} alt='Modal image' width={300} height={500} layout='fixed'/>
-              </div>
+            <Grid item={true} className={styles.modalgridimage}>
+              <Image
+                src={modalImage}
+                alt="Modal image"
+                width={300}
+                height={500}
+                layout="responsive"
+              />
             </Grid>
-            <Grid item className={styles.modalgriditem}>
-
+            <Grid item={true} className={styles.modalgriditem}>
               <Card
                 sx={{
-                  borderLeft:0,
+                  borderLeft: 0,
                   borderRadius: 0,
                   width: '30vh',
                   height: '50.3vh',
                 }}
               >
-                <Grid 
-                  container 
-                  spacing={5} 
-                  direction='column'
+                <Grid
+                  container={true}
+                  spacing={5}
+                  direction="column"
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Grid item md>
+                  <Grid item={true} md={true}>
                     <Button
                       className={styles.modalclosebutton}
                       variant="contained"
                       color="primary"
                       onClick={handleClose}
-                    >
-
-                    </Button>
+                    />
                     <div
                       style={{
                         height: 100,
                       }}
-                    ></div>
+                    />
                   </Grid>
-                  <Grid item xs>
+                  <Grid item={true} xs={true}>
                     Select amount to mint
                   </Grid>
-                  <Grid item xs>
+                  <Grid item={true} xs={true}>
                     <TextField
                       sx={{
                         width: 100,
@@ -126,7 +124,7 @@ export default function MintModal({
                       }}
                       id="amount"
                       label="Amount"
-                      type="number"                  
+                      type="number"
                       InputProps={{
                         inputProps: {
                           min: 0,
@@ -136,7 +134,7 @@ export default function MintModal({
                       variant="standard"
                     />
                   </Grid>
-                  <Grid item xs>
+                  <Grid item={true} xs={true}>
                     <Button
                       variant="outlined"
                       color="secondary"
