@@ -11,18 +11,29 @@ import {
   Tooltip,
   Typography,
 } from '@mui/material'
+import { makeStyles } from '@material-ui/styles'
 import { Box } from '@mui/system'
 import Link from 'next/link'
 import Image from 'next/image'
-import skeleIcon from '../../public/cmbaseicon.png'
-import styles from '../../styles/Home.module.css'
 import { FaDiscord, FaTwitter } from 'react-icons/fa'
+import { HiMenu } from 'react-icons/hi'
+import styles from '../../styles/Home.module.css'
 
-const pages = ['About', 'FAQ', 'Adopt']
+import skeleIcon from '../../public/cmbaseicon.png'
+import navbarLong from '../../public/navbarlong.png'
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+const navbarBckg = {
+  backGroundImage: `url(${navbarLong})`,
+}
+
+const useStyles = makeStyles((theme) => ({
+  navbarBckg: {
+    backGroundImage: `url(${navbarLong})`,
+  },
+}))
 
 export default function Navbar() {
+  const classes = useStyles()
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null
@@ -44,9 +55,9 @@ export default function Navbar() {
   }
 
   return (
-    <AppBar>
+    <AppBar className={classes.navbarBckg}>
       <Container maxWidth="xl">
-        <Toolbar>
+        <Toolbar disableGutters={true}>
           <Typography
             variant="h6"
             noWrap={true}
@@ -68,7 +79,10 @@ export default function Navbar() {
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
               color="inherit"
-            />
+            >
+              <HiMenu />
+            </IconButton>
+
             <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
@@ -76,6 +90,7 @@ export default function Navbar() {
                 vertical: 'bottom',
                 horizontal: 'left',
               }}
+              color="transparent"
               keepMounted={true}
               transformOrigin={{
                 vertical: 'top',
@@ -88,36 +103,38 @@ export default function Navbar() {
               }}
             >
               <MenuItem onClick={handleCloseNavMenu}>
-                <Link href="#about" scroll={true}>
+                <Link href="/#about" scroll={true}>
                   About
                 </Link>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Link href="/">FAQ</Link>
+                <Link href="/#faq">FAQ</Link>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
                 <Link href="/adopt">Mint</Link>
               </MenuItem>
               <MenuItem onClick={handleCloseUserMenu}>
-              <Link href="https://twitter.com/MobsCrypto">
-                <FaTwitter />
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={handleCloseUserMenu}>
-              <Link href="https://discord.gg/jshSquFwUF">
-                <FaDiscord />
-              </Link>
-            </MenuItem>
-            <MenuItem onClick={handleCloseUserMenu}>
-              <Link href="/">
-                <Image
-                  src="/opensea.png"
-                  alt="OpenSea Logo"
-                  width={17}
-                  height={17}
-                />
-              </Link>
-            </MenuItem>
+                <Link href="https://twitter.com/MobsCrypto">
+                  <FaTwitter />
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link href="https://discord.gg/jshSquFwUF">
+                  <FaDiscord />
+                </Link>
+              </MenuItem>
+              <MenuItem onClick={handleCloseUserMenu}>
+                <Link href="/">
+                  <div className={styles.invertimg}>
+                    <Image
+                      src="/opensea.png"
+                      alt="OpenSea Logo"
+                      width={17}
+                      height={17}
+                    />
+                  </div>
+                </Link>
+              </MenuItem>
             </Menu>
           </Box>
           <Typography
@@ -134,13 +151,19 @@ export default function Navbar() {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <MenuItem onClick={handleCloseNavMenu}>
-              <Link href="/#about">About</Link>
+              <Link href="/#about" scroll={true}>
+                About
+              </Link>
             </MenuItem>
             <MenuItem onClick={handleCloseNavMenu}>
-              <Link href="/#faq">FAQ</Link>
+              <Link href="/#faq" scroll={true}>
+                FAQ
+              </Link>
             </MenuItem>
             <MenuItem onClick={handleCloseNavMenu}>
-              <Link href="/adopt">Mint</Link>
+              <Link href="/adopt" scroll={true}>
+                Mint
+              </Link>
             </MenuItem>
           </Box>
 

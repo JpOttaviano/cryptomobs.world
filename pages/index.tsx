@@ -1,10 +1,11 @@
-import { Button, Grid, Typography } from '@mui/material'
+import { Box, Button, Grid, MenuItem, Typography } from '@mui/material'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useRef } from 'react'
+import { FaTwitter, FaDiscord } from 'react-icons/fa'
 import { Parallax, useParallax } from 'react-scroll-parallax'
 import Mint from '../components/Mint/mint'
 import Footer from '../components/PageComps/Footer'
@@ -43,21 +44,12 @@ const Home: NextPage = () => {
         <div>
           <Grid container={true} spacing={50} direction="column">
             <Grid item={true}>
-            <div className={styles.skybckg}>
-              </div>
+              <div className={styles.skybckg} />
               <div className={styles.titlesign}>
-                <Image
-                  src="/cryptomobstitle.png"
-                  width={1200}
-                  height={246}
-                />
+                <Image src="/cryptomobstitle.png" width={1200} height={246} />
               </div>
-              <Image
-                src="/landingHeader.png"
-                width={2400}
-                height={1350}
-              />
-            <Transition
+              <Image src="/landingHeader.png" width={2400} height={1350} />
+              <Transition
                 elem={
                   <div id="about" className={styles.transitiontext}>
                     Monsters are escaping the dungeons on a massive exodus never
@@ -73,7 +65,6 @@ const Home: NextPage = () => {
               />
             </Grid>
             <Grid item={true}>
-              
               <Image src="/landingDesigns.png" width={2400} height={1350} />
               <Transition
                 elem={
@@ -81,10 +72,10 @@ const Home: NextPage = () => {
                     The King proposed an alternative solution to the problem:
                     Integration.
                     <br />
-                    The &#39;Adopt-a-Mob&#39; initiative came to be. All citizens of the
-                    kingdom are encouraged to adopt a monster, teach them the
-                    human ways while learning theirs and try to adapt them into
-                    our society.
+                    The &#39;Adopt-a-Mob&#39; initiative came to be. All
+                    citizens of the kingdom are encouraged to adopt a monster,
+                    teach them the human ways while learning theirs and try to
+                    adapt them into our society.
                     <p />
                     Not only would this solve the monster overpopulation problem
                     but the union between monsters and humans would also prove
@@ -93,15 +84,14 @@ const Home: NextPage = () => {
                 }
               />
             </Grid>
-            
+
             <Grid item={true}>
-              
               <div className={styles.cavecenter}>
                 <Image
                   src="/cavePreview.png"
                   width={1280}
                   height={720}
-                  unoptimized
+                  unoptimized={true}
                 />
               </div>
               <Transition
@@ -122,36 +112,91 @@ const Home: NextPage = () => {
               />
             </Grid>
             <Grid item={true}>
-             
               <div className={styles.cavetop}>
-                <Image
-                  src="/endtop.png"
-                  width={2400}
-                  height={1650}
-                />
+                <Image src="/fintop.png" width={2400} height={1650} />
               </div>
-              <Parallax translateY={[15, -28]} className={styles.cavemiddletop}>
-                <Image
-                  src="/endmiddletop.png"
-                  width={2400}
-                  height={1650}
-                />
+              <Parallax translateY={[10, -10]} className={styles.cavemiddletop}>
+                <Image src="/finmiddletop.png" width={2400} height={1650} />
               </Parallax>
               <Parallax
-                translateY={[20, -31]}
+                translateY={[15, -15]}
                 className={styles.cavemiddlebottom}
               >
-                <Image
-                  src="/endmiddlebottom.png"
-                  width={2400}
-                  height={1650}
-                />
+                <Image src="/finmiddlelow.png" width={2400} height={1650} />
               </Parallax>
-              <Image src="/endbackcolor.png" width={2400} height={1650} />
-            </Grid>
-
-            <Grid item={true}>
               <div id="faq" />
+              <Image src="/endbackcolor.png" width={2400} height={1650} />
+              <div className={styles.faqtext}>
+                CryptoMobs is a collection of 10.000 unique animated monsters
+                from 5 different species. Each with its own unique traits.
+                <p />
+              </div>
+            </Grid>
+            <div id="roadmap" />
+            <Grid item={true}>
+              <div className={styles.faqtext}>
+                ROADMAP
+                <p />
+                CryptoMobs Launch
+                <br />
+                Project launch --&gt; Whitelist mint --&gt; Public mint --&gt;
+                Reveal
+                <br />
+                |
+                <br />
+                |
+                <br />
+                Metaverse Integration
+                <br />
+                Once all CryptoMobs are minted, we hope to develop a Metaverse
+                integration so owners can interact with their CryptoMobs in more
+                exciting ways.
+                <br />
+                |
+                <br />
+                |
+                <br />
+                Crypto Game
+                <br />
+                Our initial idea was to create a crypto videogame. Due to lack of
+                resources we ended up postponing the project. We hope that this
+                collection can serve as a kickstarter to develop the game.
+                <br />
+                Most of the CryptoMobs design and animations are actually assets
+                we are using for the game.
+                <br />
+                We cant say much about it since it is still in very early
+                stages, but we can confirm that it will be possible to use
+                CryptoMobs to interact with the game.
+              </div>
+            </Grid>
+            <Grid item={true}>
+              <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+                <MenuItem>
+                  <Link href="https://twitter.com/MobsCrypto">
+                    <div className={styles.invertimg}>
+                      <FaTwitter />
+                    </div>
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link href="https://discord.gg/jshSquFwUF">
+                    <div className={styles.invertimg}>
+                      <FaDiscord />
+                    </div>
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link href="/">
+                    <Image
+                      src="/opensea.png"
+                      alt="OpenSea Logo"
+                      width={17}
+                      height={17}
+                    />
+                  </Link>
+                </MenuItem>
+              </Box>
             </Grid>
           </Grid>
         </div>

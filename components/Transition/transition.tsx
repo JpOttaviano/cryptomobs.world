@@ -9,10 +9,7 @@ import { Parallax } from 'react-scroll-parallax'
 
 export default function transitionText({ elem }: { elem: JSX.Element }) {
   return (
-    <Parallax 
-        translateY={[0, -105]}
-        className={styles.transitiontop}
-    >    
+    <Parallax translateY={[0, -105]} className={styles.transitiontop}>
       <Image
         src={transiticionBottomUp}
         width={2200}
@@ -20,23 +17,21 @@ export default function transitionText({ elem }: { elem: JSX.Element }) {
         layout="responsive"
       />
       <div className={styles.outertransition}>
-      <Parallax
-        translateY={[10,-20]}
-      >
-        <Image
-          src={transiticiontopUp}
-          width={2200}
-          height={320}
-          layout="responsive"
-        />
-        <div className={styles.innertransition}>{elem}</div>
-        <Image
-          src={transiticionTopDown}
-          width={2200}
-          height={320}
-          layout="responsive"
-        />
-      </Parallax>
+        <Parallax translateY={[10, -20]}>
+          <Image
+            src={transiticiontopUp}
+            width={2200}
+            height={320}
+            layout="responsive"
+          />
+          <div className={styles.innertransition}>{elem}</div>
+          <Image
+            src={transiticionTopDown}
+            width={2200}
+            height={320}
+            layout="responsive"
+          />
+        </Parallax>
       </div>
       <Image
         src={transiticionBottomDown}

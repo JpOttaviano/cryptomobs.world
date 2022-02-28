@@ -93,6 +93,19 @@
   top: 38%;
 }
 
+.faqtext{
+  position: relative;
+  z-index: 6;
+  margin-left: 10%;
+  margin-right: 10%;
+  font-family: monospace, monospace;
+  font-size: calc(1em + 1vmin);
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  top: 38%;
+}
+
 .cavecenter{
   text-align: center;
   vertical-align: middle;
@@ -235,6 +248,10 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
+  filter: invert(100%);
+}
+
+.invertimg {
   filter: invert(100%);
 }
 
