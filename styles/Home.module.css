@@ -1,15 +1,15 @@
 .container {
-  min-height: 100vh;
-  padding: 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  background-color: #0f0e1a;
+  position: relative;
+  min-height: calc(100vh)
+}
+
+@font-face {
+  font-family: 'pixelart';
+  src: url('/fonts/retrogame.ttf') format('truetype');
 }
 
 .main {
-  padding: 5rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -18,10 +18,14 @@
 }
 
 .footer {
+  display: flex;
+  position: absolute;
   width: 100%;
   height: 100px;
-  border-top: 1px solid #eaeaea;
-  display: flex;
+  bottom: 0;
+  flex: 1;
+  padding: 2rem 0;
+  color: #fafafa;
   justify-content: center;
   align-items: center;
 }
@@ -31,11 +35,142 @@
   justify-content: center;
   align-items: center;
   flex-grow: 1;
+  bottom: 0;
+}
+
+.titlesign {
+  position: absolute; 
+  left: 50%; 
+  transform: translate(-50%, 60%);
+  z-index: 1;
+}
+
+.skybckg{
+  background-color: #c6fdff;
+  height: 10vh;
+  position: relative;
+}
+
+.flipimage {
+  transform: scale(-1,1);
+}
+
+.linkcolor {
+  color: #625e9b;
+}
+
+.homemint {
+  position: ab;
+  left: 500px;
+  align-content: flex-start;
+  z-index: 1;
+}
+
+.transitionbottom{
+  background-color: #0f0e1a;
+  position: relative;
+  z-index: 5;
+}
+.transitiontop{
+  position: absolute;
+  z-index: 6;
+}
+.outertransition {
+  background-color: #0f0e1a;
+  position: relative;
+  z-index: 7;
+}
+
+.innertransition{
+  background-color: #262439;
+  position: inherit;
+  z-index: 6;
+}
+
+.backgroundimage{
+  position: absolute;
+}
+
+.transitiontext{
+  position: relative;
+  z-index: 7;
+  margin-left: 15%;
+  margin-right: 15%;
+  font-family: pixelart;
+  font-size: calc(1em + 1vmin);
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  top: 38%;
+}
+
+.faqtext{
+  position: relative;
+  z-index: 6;
+  margin-left: 10%;
+  margin-right: 10%;
+  font-family: pixelart;
+  font-size: calc(1em + 1vmin);
+  color: #fff;
+  text-align: center;
+  vertical-align: middle;
+  top: 38%;
+}
+
+.cavecenter{
+  text-align: center;
+  vertical-align: middle;
+
+}
+
+.cavetop {
+  position: absolute;
+  z-index: 4;
+}
+
+.cavemiddletop {
+  position: absolute;
+  z-index: 3;
+}
+
+.cavemiddlebottom {
+  position: absolute;
+  z-index: 2;
 }
 
 .title a {
   color: #0070f3;
   text-decoration: none;
+}
+
+.modalgriditem {
+  display: flex;
+  width: '20vh';
+  height: '52vh';
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+  text-align: center;
+  font-family: pixelart;
+  font-size: larger;
+}
+
+.modalclose {
+  display: flex;
+  justify-content: flex-end;
+  align-items: right; 
+}
+
+.modalgridimage {
+  display: flex;
+  width: '30vh';
+  height: '51vh';
+  justify-content: flex-end;
+  align-items: center;
+  flex-grow: 1;
+  text-align: center;
+  left: 200rem;
+  transform: translate(0, 1%),
 }
 
 .title a:hover,
@@ -56,8 +191,37 @@
 }
 
 .description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   line-height: 1.5;
-  font-size: 1.5rem;
+  font-family: pixelart;
+  color: #fafafa;
+  text-align: center;
+}
+
+.mintcontent {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* bring your own prefixes */
+  font-family: pixelart;
+  color: #fafafa;
+  z-index: 3;
+}
+
+
+.backgroundimage {
+  position: absolute;
+}
+
+.overindex {
+  z-index: 1;
+}
+
+.infocard {
+  color: #fafafa;
 }
 
 .code {
@@ -74,8 +238,6 @@
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  max-width: 800px;
-  margin-top: 3rem;
 }
 
 .card {
@@ -87,7 +249,6 @@
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
-  width: 45%;
 }
 
 .card:hover,
@@ -111,6 +272,11 @@
 .logo {
   height: 1em;
   margin-left: 0.5rem;
+  filter: invert(100%);
+}
+
+.invertimg {
+  filter: invert(100%);
 }
 
 @media (max-width: 600px) {
