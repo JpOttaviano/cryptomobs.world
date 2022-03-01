@@ -1,4 +1,5 @@
 import { Box, Button, Grid, MenuItem, Typography } from '@mui/material'
+import { withStyles } from '@material-ui/core/styles'
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
@@ -7,6 +8,8 @@ import { useRouter } from 'next/router'
 import { useRef } from 'react'
 import { FaTwitter, FaDiscord } from 'react-icons/fa'
 import { Parallax, useParallax } from 'react-scroll-parallax'
+import styled from 'styled-components'
+
 import Mint from '../components/Mint/mint'
 import Footer from '../components/PageComps/Footer'
 import Header from '../components/PageComps/Header'
@@ -14,24 +17,20 @@ import Navbar from '../components/PageComps/Navbar'
 import Transition from '../components/Transition/transition'
 import styles from '../styles/Home.module.css'
 
-const texts = [
-  `Monsters are escaping the dungeons on a massive exodus never before seen.
-  The sheer amount of monsters roaming the land is just to much to fight off.
-  Without mediation, a massive conflict between species is inminent.
-  `,
-  `The King proposed an alternative solution to the problem: Integration.
-  The "Adopt-a-Mob" initiative came to be. All citizens of the kingdom are encouraged to adopt a monster, teach them the human ways while learning theirs and try to
-  adapt them into our society. Not only would this solve the monster overpopulation problem but the union between monsters and humans would also prove beneficial for both.`,
-
-  `An initial bunch of 10 thousand monsters of 5 different species agreed to the initiave to prove that co-existing is possible.
-   Help relieve the monster overpopulation issue, while the kingdom keeps investigating the root cause of the monster dungeon exodus.
-   `,
-]
+const MenuItmSty = withStyles({
+  root: {
+    justifyContent: 'flex-start',
+  },
+})(MenuItem)
 
 const imgRes = {
   width: 2400,
   height: 1350,
 }
+
+const PurpleLink = styled.a`
+  color: violet;
+`
 
 const Home: NextPage = () => {
   const router = useRouter()
@@ -73,7 +72,7 @@ const Home: NextPage = () => {
                     Integration.
                     <br />
                     The &#39;Adopt-a-Mob&#39; initiative came to be. All
-                    citizens of the kingdom are encouraged to adopt a monster,
+                    citizens of the Kingdom are encouraged to adopt a monster,
                     teach them the human ways while learning theirs and try to
                     adapt them into our society.
                     <p />
@@ -97,15 +96,15 @@ const Home: NextPage = () => {
               <Transition
                 elem={
                   <div className={styles.transitiontext}>
-                    An initial bunch of 10 thousand monsters of 5 different
-                    species agreed to the initiave to prove that co-existing is
+                    An initial bunch of 10.000 monsters of 5 different species
+                    agreed to the initiave to prove that co-existing is
                     possible.
                     <br />
                     You can adopt these unique creatures to help humans and
                     monsters close the gap between species.
                     <p />
                     Help relieve the monster overpopulation issue, while the
-                    kingdom keeps investigating the root cause of the monster
+                    Kingdom keeps investigating the root cause of the monster
                     dungeon exodus.
                   </div>
                 }
@@ -124,18 +123,61 @@ const Home: NextPage = () => {
               >
                 <Image src="/finmiddlelow.png" width={2400} height={1650} />
               </Parallax>
-              <div id="faq" />
+
               <Image src="/endbackcolor.png" width={2400} height={1650} />
+            </Grid>
+          </Grid>
+
+          <Grid container={true} spacing={16} direction="column">
+            <Grid item={true}>
               <div className={styles.faqtext}>
                 CryptoMobs is a collection of 10.000 unique animated monsters
-                from 5 different species. Each with its own unique traits.
+                from 5 different species hosted on the Ethereum network
                 <p />
+              </div>
+            </Grid>
+            <Grid item={true}>
+              <div className={styles.faqtext}>
+                <Grid container={true} spacing={6} direction="column">
+                  <Grid item={true}>
+                    <div id="faq" />
+                  </Grid>
+                  <Grid item={true}>
+                    <h2>How can I get my CryptoMobs?</h2>
+                    There will be a presale for whitelisted addresses on the
+                    first week for early supporters as well as active community
+                    members. After that the public mint will begin the second
+                    week after the launch.
+                  </Grid>
+                  <Grid item={true}>
+                    <h2>When will mint start?</h2>
+                    Whitelist mint: 3rd March 2022
+                    <br />
+                    Public mint: 7th March 2022
+                  </Grid>
+
+                  <Grid item={true}>
+                    <h2>How much will it cost?</h2>
+                    0.03 ETH
+                  </Grid>
+                  <Grid item={true}>
+                    <h2>How can I get a whitelist spot?</h2>
+                    Through our{' '}
+                    <Link
+                      href={'https://discord.gg/jshSquFwUF'}
+                      passHref={true}
+                    >
+                      <PurpleLink> Discord</PurpleLink>
+                    </Link>{' '}
+                    server
+                  </Grid>
+                </Grid>
               </div>
             </Grid>
             <div id="roadmap" />
             <Grid item={true}>
               <div className={styles.faqtext}>
-                ROADMAP
+                <h1>ROADMAP</h1>
                 <p />
                 CryptoMobs Launch
                 <br />
@@ -148,7 +190,7 @@ const Home: NextPage = () => {
                 <br />
                 Metaverse Integration
                 <br />
-                Once all CryptoMobs are minted, we hope to develop a Metaverse
+                Once all CryptoMobs are minted, the next step is Metaverse
                 integration so owners can interact with their CryptoMobs in more
                 exciting ways.
                 <br />
@@ -158,12 +200,8 @@ const Home: NextPage = () => {
                 <br />
                 Crypto Game
                 <br />
-                Our initial idea was to create a crypto videogame. Due to lack of
-                resources we ended up postponing the project. We hope that this
-                collection can serve as a kickstarter to develop the game.
-                <br />
-                Most of the CryptoMobs design and animations are actually assets
-                we are using for the game.
+                The launch of this this collection will serve as a kickstarter
+                to develop a crypto game.
                 <br />
                 We cant say much about it since it is still in very early
                 stages, but we can confirm that it will be possible to use
@@ -171,22 +209,39 @@ const Home: NextPage = () => {
               </div>
             </Grid>
             <Grid item={true}>
+              <div className={styles.faqtext}>
+                <Grid container={true} spacing={20} direction="column">
+                  <Grid item={true}>
+                    Join our
+                    <Link
+                      href={'https://discord.gg/jshSquFwUF'}
+                      passHref={true}
+                    >
+                      <PurpleLink> Discord</PurpleLink>
+                    </Link>{' '}
+                    server to get whitelisted, updates and more information
+                    about the project.
+                  </Grid>
+                </Grid>
+              </div>
+            </Grid>
+            <Grid item={true}>
               <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                <MenuItem>
+                <MenuItmSty>
                   <Link href="https://twitter.com/MobsCrypto">
                     <div className={styles.invertimg}>
                       <FaTwitter />
                     </div>
                   </Link>
-                </MenuItem>
-                <MenuItem>
+                </MenuItmSty>
+                <MenuItmSty>
                   <Link href="https://discord.gg/jshSquFwUF">
                     <div className={styles.invertimg}>
                       <FaDiscord />
                     </div>
                   </Link>
-                </MenuItem>
-                <MenuItem>
+                </MenuItmSty>
+                <MenuItmSty>
                   <Link href="/">
                     <Image
                       src="/opensea.png"
@@ -195,7 +250,7 @@ const Home: NextPage = () => {
                       height={17}
                     />
                   </Link>
-                </MenuItem>
+                </MenuItmSty>
               </Box>
             </Grid>
           </Grid>

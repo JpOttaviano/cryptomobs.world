@@ -20,6 +20,9 @@ declare var window: any
 
 const { INFURA_ID } = process.env
 
+// TODO: Update to correct value
+const MAX_AVAIL = 20
+
 const providerOptions = {
   walletconnect: {
     package: WalletConnectProvider, // required
@@ -180,10 +183,10 @@ export default function Mint({}) {
     // const minted = await contract.balanceOf(address)
     // setMinted(Number(minted))
 
-    const bigintsupply = await contract.totalSupply()
-    setSupply(Number(bigintsupply))
+    // const bigintsupply = await contract.totalSupply()
+    setSupply(0)
 
-    setAvailable(10000 - supply)
+    setAvailable(MAX_AVAIL - minted)
 
     // const greet = (await contract.greet()).toString()
     // setGreet(greet)
@@ -273,64 +276,97 @@ export default function Mint({}) {
 
   return (
     <div className={styles.description}>
-      <div className={styles.description}>
-        {false ? (
-          <Button onClick={connect}>Connect</Button>
-        ) : (
-          <div>
-            <Grid container={true} direction="row" spacing={10}>
-              <Grid item={true}>
-                <InfoCard
-                  elem={
-                    <div>
-                      <h1>Total minted</h1>
-                      <h1>{supply}</h1>
-                    </div>
-                  }
-                />
+      <Grid container={true} spacing={10} direction="column">
+        <Grid item={true} />
+        <Grid item={true}>
+          <Button onClick={disconnect}>Disconect</Button>
+        </Grid>
+        <Grid item={true}>
+          {false ? (
+            <Button onClick={connect}>Connect</Button>
+          ) : (
+            <div>
+              <Grid
+                container={true}
+                direction="row"
+                spacing={15}
+                className={styles.mintcontent}
+                wrap="nowrap"
+              >
+                <Grid item={true}>
+                  <InfoCard
+                    elem={
+                      <div>
+                        <h1>Total minted</h1>
+                        <h1>{supply}</h1>
+                      </div>
+                    }
+                  />
+                </Grid>
+                <Grid item={true}>
+                  <InfoCard
+                    elem={
+                      <div>
+                        <h1>You Own</h1>
+                        <h1>{balance}</h1>
+                      </div>
+                    }
+                  />
+                </Grid>
+                <Grid item={true}>
+                  <InfoCard
+                    elem={
+                      <div>
+                        <h1>Available</h1>
+                        <h1>{available}</h1>
+                      </div>
+                    }
+                  />
+                </Grid>
               </Grid>
-              <Grid item={true}>
-                <InfoCard
-                  elem={
-                    <div>
-                      <h1>You Own</h1>
-                      <h1>{balance}</h1>
-                    </div>
-                  }
-                />
+              <Grid
+                container={true}
+                direction="row"
+                spacing={15}
+                className={styles.mintcontent}
+              >
+                <Grid item={true}>
+                  <h1> Your Address</h1>
+                  0x06012c8cf97BEaD5deAe237070F9587f8E7A266d
+                </Grid>
+                <Grid item={true}>
+                  <h1>Contract Address</h1>
+                  {CONTRACT_ADDRESS}
+                </Grid>
               </Grid>
-              <Grid item={true}>
-                <InfoCard
-                  elem={
-                    <div>
-                      <h1>Available</h1>
-                      <h1>{available}</h1>
-                    </div>
-                  }
-                />
+              <p />
+              <div>
+                Please make sure that the contract address is correct when
+                approving the mint transaction.
+              </div>
+              <p />
+              <Grid
+                container={true}
+                direction="row"
+                spacing={20}
+                className={styles.mintcontent}
+              >
+                <Grid item={true}>
+                  <MintModal
+                    provider={web3Provider}
+                    contract={contract}
+                    signer={signer}
+                  />
+                </Grid>
+                <Grid item={true}>
+                  <Button onClick={disconnect}>Disconect</Button>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid container={true} direction="row" spacing={10} display="flex">
-              <Grid item={true} justifyContent="flex-start">
-                <h1>Address</h1>
-                {address}
-              </Grid>
-              <Grid item={true} justifyContent="flex-end">
-                <h1>Contract Address</h1>
-                {CONTRACT_ADDRESS}
-              </Grid>
-            </Grid>
-
-            <Button onClick={disconnect}>Disconect</Button>
-
-            <MintModal
-              provider={web3Provider}
-              contract={contract}
-              signer={signer}
-            />
-          </div>
-        )}
-      </div>
+            </div>
+          )}
+        </Grid>
+        <Grid item={true} />
+      </Grid>
     </div>
   )
 }

@@ -15,7 +15,7 @@ export default function InfoCard({ elem }: { elem: JSX.Element }) {
           borderRadius: 2,
           opacity: 0.5,
           width: '30vh',
-          height: '30vh',
+          height: '25vh',
         }}
       >
         {elem}

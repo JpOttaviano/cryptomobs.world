@@ -17,19 +17,25 @@ const backgroundStyle = {
 
 const Adopt: NextPage = () => {
   const router = useRouter()
-  return (
+  /*return (
     <div className={styles.container}>
       <Header />
 
       <main className={styles.main}>
         <Navbar />
-        <div className={styles.backgroundimage}>
-          <Image src="/escapecave.png" width={2400} height={1350} />
-        </div>
         <p className={styles.description}>this is mono</p>
-        <div className={styles.overindex}>
-          <Mint />
-        </div>
+        <Mint />
+      </main>
+
+      <Footer />
+    </div>
+  )*/
+  return (
+    <div className={styles.container}>
+      <Header />
+
+      <main className={styles.main}>
+        <p className={styles.description}> No mobs to adopt</p>
       </main>
 
       <Footer />

@@ -111,8 +111,11 @@ export default function Navbar() {
                 <Link href="/#faq">FAQ</Link>
               </MenuItem>
               <MenuItem onClick={handleCloseNavMenu}>
-                <Link href="/adopt">Mint</Link>
+                <Link href="/#roadmap">Roadmap</Link>
               </MenuItem>
+              {/*<MenuItem onClick={handleCloseNavMenu}>
+                <Link href="/adopt">Mint</Link>
+              </MenuItem>*/}
               <MenuItem onClick={handleCloseUserMenu}>
                 <Link href="https://twitter.com/MobsCrypto">
                   <FaTwitter />
@@ -161,10 +164,13 @@ export default function Navbar() {
               </Link>
             </MenuItem>
             <MenuItem onClick={handleCloseNavMenu}>
+              <Link href="/#roadmap">Roadmap</Link>
+            </MenuItem>
+            {/*<MenuItem onClick={handleCloseNavMenu}>
               <Link href="/adopt" scroll={true}>
                 Mint
               </Link>
-            </MenuItem>
+            </MenuItem>*/}
           </Box>
 
           <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' } }}>

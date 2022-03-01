@@ -8,7 +8,10 @@ export const CONTRACT_ABI = [
   'function mintOpen() public view returns (bool)',
 
   // returns the amount of nfts owned by address
-  'function balanceOf(address owner) public view virtual override returns (uint 256)',
+  'function balanceOf(address owner) public view virtual override returns (uint256)',
+
+  // returnr the amoutn of autorhized mints
+  'function whitelist(address owner) public view returns (uint256)',
 
   // Goerli contract test supply func
   'function totalSupply() public view returns (uint256)',
