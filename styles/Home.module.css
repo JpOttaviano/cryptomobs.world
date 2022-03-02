@@ -200,6 +200,10 @@
   text-align: center;
 }
 
+.pxielfont {
+  font-family: pixelart;
+}
+
 .mintcontent {
   position: relative;
   display: flex;

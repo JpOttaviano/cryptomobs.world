@@ -14,14 +14,13 @@ import styles from '../../styles/Home.module.css'
 import caveImage from '../../public/escapecave.png'
 import InfoCard from './infoCard'
 import { Grid } from '@mui/material'
-import { flexbox } from '@mui/system'
 
 declare var window: any
 
 const { INFURA_ID } = process.env
 
 // TODO: Update to correct value
-const MAX_AVAIL = 20
+const MAX_AVAIL = 10
 
 const providerOptions = {
   walletconnect: {
@@ -291,7 +290,6 @@ export default function Mint({}) {
                 direction="row"
                 spacing={15}
                 className={styles.mintcontent}
-                wrap="nowrap"
               >
                 <Grid item={true}>
                   <InfoCard
