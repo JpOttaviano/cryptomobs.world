@@ -20,6 +20,8 @@ import { IoMdClose } from 'react-icons/io'
 import modalImage from '../../public/mintModa.png'
 import styles from '../../styles/Home.module.css'
 
+const UNIT_PRICE = 0.03
+
 const containerStyle = {
   display: 'flex',
   justifyContent: 'center',
@@ -44,24 +46,34 @@ export default function MintModal({
   signer: ethers.providers.JsonRpcSigner
 }) {
   const [open, setOpen] = React.useState(false)
+  const [amount, setAmount] = React.useState(0)
   // const [grlyName, setGrlyName] = React.useState('')
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
 
-  const triggerMint = async (count: number) => {
-    // await contract.mint(count)
+  const handleAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setAmount(Number(event.target.value))
+  }
+
+  const triggerMint = async () => {
+    const price = amount * UNIT_PRICE
+    await contract.mint(amount, {
+      value: ethers.utils.parseEther(price.toString()),
+    })
     setOpen(false)
   }
 
   useEffect(() => {
-    // contract.connect(signer)
+    contract.connect(signer)
     // contract.name().then(name => { setGrlyName(name) })
     // TODO add contract listeners ?
   }, [])
 
   return (
     <div>
-      <Button onClick={handleOpen}>MINT</Button>
+      <Button variant="contained" onClick={handleOpen}>
+        MINT
+      </Button>
       <Modal
         open={open}
         onClose={handleClose}
@@ -114,6 +126,8 @@ export default function MintModal({
                             max: 10,
                           },
                         }}
+                        value={amount}
+                        onChange={handleAmount}
                         variant="standard"
                       />
                     </Item>
@@ -121,7 +135,7 @@ export default function MintModal({
                       <Button
                         variant="outlined"
                         color="secondary"
-                        onClick={() => triggerMint(2)}
+                        onClick={() => triggerMint()}
                       >
                         MINT
                       </Button>

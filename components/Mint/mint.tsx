@@ -13,11 +13,17 @@ import MintModal from './mintModal'
 import styles from '../../styles/Home.module.css'
 import caveImage from '../../public/escapecave.png'
 import InfoCard from './infoCard'
-import { Grid } from '@mui/material'
+import { Grid, Container, Stack, styled } from '@mui/material'
 
 declare var window: any
 
 const { INFURA_ID } = process.env
+
+const Item = styled(Container)(({ theme }) => ({
+  textAlign: 'center',
+  padding: theme.spacing(4),
+  border: '0',
+}))
 
 // TODO: Update to correct value
 const MAX_AVAIL = 10
@@ -153,39 +159,45 @@ export default function Mint({}) {
   const [minted, setMinted] = React.useState(0)
   const [supply, setSupply] = React.useState(0)
   const [available, setAvailable] = React.useState(0)
+  const [wrongNetwork, setWrongNetwork] = React.useState(false)
 
   const connect = useCallback(async function () {
     // This is the initial `provider` that is returned when
     // using web3Modal to connect. Can be MetaMask or WalletConnect.
-    // const provider = await web3Modal.connect()
+    const provider = await web3Modal.connect()
 
     // We plug the initial `provider` into ethers.js and get back
     // a Web3Provider. This will add on methods from ethers.js and
     // event listeners such as `.on()` will be different.
 
-    /*const web3Provider = new ethers.providers.Web3Provider(provider)
+    const web3Provider = new ethers.providers.Web3Provider(provider)
 
     const signer = web3Provider.getSigner()
     const address = await signer.getAddress()
 
     const network = await web3Provider.getNetwork()
+
+    if (network.chainId !== 1 && network.chainId !== 1337) {
+      setWrongNetwork(true)
+    }
+
     const balance = Number(
       ethers.utils.formatEther(await web3Provider.getBalance(address))
-    )*/
-
-    const contract = new ethers.Contract(
-      CONTRACT_ADDRESS,
-      CONTRACT_ABI
-      // signer
     )
 
-    // const minted = await contract.balanceOf(address)
-    // setMinted(Number(minted))
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer)
+
+    const minted = await contract.balanceOf(address)
+    setMinted(Number(minted))
+
+    const whitelisted = await contract.whitelist(address)
 
     // const bigintsupply = await contract.totalSupply()
-    setSupply(0)
+    setSupply(10000)
 
-    setAvailable(MAX_AVAIL - minted)
+    if (whitelisted === true) {
+      setAvailable(MAX_AVAIL - minted)
+    }
 
     // const greet = (await contract.greet()).toString()
     // setGreet(greet)
@@ -196,10 +208,10 @@ export default function Mint({}) {
       provider,
       web3Provider,
       address,
-      // network: network.name,
-      // chainId: network.chainId,
-      network: 'mainnet',
-      chainId: 0,
+      network: network.name,
+      chainId: network.chainId,
+      // network: 'mainnet',
+      // chainId: 0,
       balance,
       contract,
       signer,
@@ -254,9 +266,9 @@ export default function Mint({}) {
         window.location.reload()
       }
 
-      // window.ethereum.on('accountsChanged', handleAccountsChanged)
+      window.ethereum.on('accountsChanged', handleAccountsChanged)
 
-      /*provider.on('accountsChanged', handleAccountsChanged)
+      provider.on('accountsChanged', handleAccountsChanged)
       provider.on('chainChanged', handleChainChanged)
       provider.on('disconnect', handleDisconnect)
 
@@ -269,7 +281,7 @@ export default function Mint({}) {
           provider.removeListener('chainChanged', handleChainChanged)
           provider.removeListener('disconnect', handleDisconnect)
         }
-      }*/
+      }
     }
   }, [provider, disconnect])
 
@@ -277,12 +289,26 @@ export default function Mint({}) {
     <div className={styles.description}>
       <Grid container={true} spacing={10} direction="column">
         <Grid item={true} />
+
         <Grid item={true}>
-          <Button onClick={disconnect}>Disconect</Button>
+          <p className={styles.description}> Adopt-a-Mob is live!</p>
         </Grid>
         <Grid item={true}>
-          {false ? (
-            <Button onClick={connect}>Connect</Button>
+          {wrongNetwork === true ? (
+            <h2>Wrong network. Please switch to Ethereum Mainnet network.</h2>
+          ) : !provider ? (
+            <div>
+              <Stack>
+                <Item>
+                  <div>Connect your wallet to start minting</div>
+                </Item>
+                <Item>
+                  <Button variant="contained" onClick={connect}>
+                    Connect
+                  </Button>
+                </Item>
+              </Stack>
+            </div>
           ) : (
             <div>
               <Grid
@@ -295,7 +321,7 @@ export default function Mint({}) {
                   <InfoCard
                     elem={
                       <div>
-                        <h1>Total minted</h1>
+                        <h1>Total supply</h1>
                         <h1>{supply}</h1>
                       </div>
                     }
@@ -306,7 +332,7 @@ export default function Mint({}) {
                     elem={
                       <div>
                         <h1>You Own</h1>
-                        <h1>{balance}</h1>
+                        <h1>{minted}</h1>
                       </div>
                     }
                   />
@@ -315,7 +341,7 @@ export default function Mint({}) {
                   <InfoCard
                     elem={
                       <div>
-                        <h1>Available</h1>
+                        <h1>You can mint</h1>
                         <h1>{available}</h1>
                       </div>
                     }
@@ -330,7 +356,7 @@ export default function Mint({}) {
               >
                 <Grid item={true}>
                   <h1> Your Address</h1>
-                  0x06012c8cf97BEaD5deAe237070F9587f8E7A266d
+                  {address}
                 </Grid>
                 <Grid item={true}>
                   <h1>Contract Address</h1>
@@ -350,14 +376,20 @@ export default function Mint({}) {
                 className={styles.mintcontent}
               >
                 <Grid item={true}>
-                  <MintModal
-                    provider={web3Provider}
-                    contract={contract}
-                    signer={signer}
-                  />
+                  {available > 0 ? (
+                    <MintModal
+                      provider={web3Provider}
+                      contract={contract}
+                      signer={signer}
+                    />
+                  ) : (
+                    <div>Your address has no mints available</div>
+                  )}
                 </Grid>
                 <Grid item={true}>
-                  <Button onClick={disconnect}>Disconect</Button>
+                  <Button variant="contained" onClick={disconnect}>
+                    Disconnect
+                  </Button>
                 </Grid>
               </Grid>
             </div>

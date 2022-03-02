@@ -33,7 +33,8 @@ const Adopt: NextPage = () => {
       <Header />
 
       <main className={styles.main}>
-        <p className={styles.description}> No mobs to adopt</p>
+        <Navbar />
+
         <Mint />
       </main>
 

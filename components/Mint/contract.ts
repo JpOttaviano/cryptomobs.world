@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = '0x06012c8cf97BEaD5deAe237070F9587f8E7A266d'
+export const CONTRACT_ADDRESS = '0x628Bd630fcC6eEff2Bc3275e5900c70Cc055CB2c'
 
 export const CONTRACT_ABI = [
   // mint the amount of nfts specified
@@ -11,7 +11,7 @@ export const CONTRACT_ABI = [
   'function balanceOf(address owner) public view virtual override returns (uint256)',
 
   // returnr the amoutn of autorhized mints
-  'function whitelist(address owner) public view returns (uint256)',
+  'function whitelist(address owner) public view returns (bool)',
 
   // Goerli contract test supply func
   'function totalSupply() public view returns (uint256)',
