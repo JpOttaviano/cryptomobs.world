@@ -162,7 +162,7 @@ export default function Mint({}) {
   const [wrongNetwork, setWrongNetwork] = React.useState(false)
 
   const switchNetwork = useCallback(async function () {
-    const chainId = `0x${Number(1).toString(16)}`
+    const chainId = `0x${Number(1337).toString(16)}`
     // Check if MetaMask is installed
     // MetaMask injects the global API into window.ethereum
     if (window.ethereum) {

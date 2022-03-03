@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = '0x780EE32FEB76728b4EC46Dbe8F5c14f8FfC18d9c'
+export const CONTRACT_ADDRESS = '0x628Bd630fcC6eEff2Bc3275e5900c70Cc055CB2c'
 
 export const CONTRACT_ABI = [
   // mint the amount of nfts specified
