@@ -161,6 +161,50 @@ export default function Mint({}) {
   const [available, setAvailable] = React.useState(0)
   const [wrongNetwork, setWrongNetwork] = React.useState(false)
 
+  const switchNetwork = useCallback(async function () {
+    const chainId = `0x${Number(1).toString(16)}`
+    // Check if MetaMask is installed
+    // MetaMask injects the global API into window.ethereum
+    if (window.ethereum) {
+      try {
+        // check if the chain to connect to is installed
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId }], // chainId must be in hexadecimal numbers
+        })
+      } catch (err: any) {
+        // This error code indicates that the chain has not been added to MetaMask
+        // if it is not, then install it into the user MetaMask
+        if (err.code === 4902) {
+          try {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainName: 'Ethereum',
+                  chainId,
+                  // rpcUrls: ['https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'],
+                  // blockExplorerUrls: ['https://etherscan.io'],
+                  rpcUrls: [
+                    'https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+                  ],
+                },
+              ],
+            })
+          } catch (addError) {
+            console.error(addError)
+          }
+        }
+        console.error(err)
+      }
+    } else {
+      // if no window.ethereum then MetaMask is not installed
+      alert(
+        'MetaMask is not installed. Please consider installing it: https://metamask.io/download.html'
+      )
+    }
+  }, [])
+
   const connect = useCallback(async function () {
     // This is the initial `provider` that is returned when
     // using web3Modal to connect. Can be MetaMask or WalletConnect.
@@ -178,7 +222,9 @@ export default function Mint({}) {
     const network = await web3Provider.getNetwork()
 
     if (network.chainId !== 1 && network.chainId !== 1337) {
+      // await swithEthereumChain()
       setWrongNetwork(true)
+      return
     }
 
     const balance = Number(
@@ -243,31 +289,32 @@ export default function Mint({}) {
   // here so that when a user switches accounts or networks, we can update the
   // local React state with that new information.
   useEffect(() => {
+    const handleAccountsChanged = (accounts: string[]) => {
+      // eslint-disable-next-line no-console
+      console.log('accountsChanged', accounts)
+      dispatch({
+        type: 'SET_ADDRESS',
+        address: accounts[0],
+      })
+      window.location.reload()
+    }
+
+    // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
+    const handleChainChanged = (_hexChainId: string) => {
+      window.location.reload()
+    }
+
+    const handleDisconnect = (error: { code: number; message: string }) => {
+      // eslint-disable-next-line no-console
+      console.log('disconnect', error)
+      disconnect()
+      window.location.reload()
+    }
+
+    window.ethereum.on('accountsChanged', handleAccountsChanged)
+    window.ethereum.on('chainChanged', handleChainChanged)
+    window.ethereum.on('disconnect', handleDisconnect)
     if (provider?.on) {
-      const handleAccountsChanged = (accounts: string[]) => {
-        // eslint-disable-next-line no-console
-        console.log('accountsChanged', accounts)
-        dispatch({
-          type: 'SET_ADDRESS',
-          address: accounts[0],
-        })
-        window.location.reload()
-      }
-
-      // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
-      const handleChainChanged = (_hexChainId: string) => {
-        window.location.reload()
-      }
-
-      const handleDisconnect = (error: { code: number; message: string }) => {
-        // eslint-disable-next-line no-console
-        console.log('disconnect', error)
-        disconnect()
-        window.location.reload()
-      }
-
-      window.ethereum.on('accountsChanged', handleAccountsChanged)
-
       provider.on('accountsChanged', handleAccountsChanged)
       provider.on('chainChanged', handleChainChanged)
       provider.on('disconnect', handleDisconnect)
@@ -295,7 +342,12 @@ export default function Mint({}) {
         </Grid>
         <Grid item={true}>
           {wrongNetwork === true ? (
-            <h2>Wrong network. Please switch to Ethereum Mainnet network.</h2>
+            <div>
+              <h2>Wrong network. Please switch to Ethereum Mainnet network.</h2>
+              <Button variant="contained" onClick={switchNetwork}>
+                Switch to Ethereum Network
+              </Button>
+            </div>
           ) : !provider ? (
             <div>
               <Stack>
