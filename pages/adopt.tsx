@@ -5,10 +5,8 @@ import Image from 'next/image'
 import Mint from '../components/Mint/mint'
 import Head from 'next/head'
 import { Button } from '@mui/material'
-import { Router, useRouter } from 'next/router'
 import Header from '../components/PageComps/Header'
 import Footer from '../components/PageComps/Footer'
-import Link from 'next/link'
 import Navbar from '../components/PageComps/Navbar'
 
 const backgroundStyle = {
@@ -16,7 +14,7 @@ const backgroundStyle = {
 }
 
 const Adopt: NextPage = () => {
-  const router = useRouter()
+  // const router = useRouter()
   /*return (
     <div className={styles.container}>
       <Header />
@@ -35,7 +33,9 @@ const Adopt: NextPage = () => {
       <Header />
 
       <main className={styles.main}>
-        <p className={styles.description}> No mobs to adopt</p>
+        <Navbar />
+
+        <Mint />
       </main>
 
       <Footer />

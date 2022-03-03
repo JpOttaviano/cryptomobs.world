@@ -113,9 +113,10 @@ export default function Navbar() {
               <MenuItem onClick={handleCloseNavMenu}>
                 <Link href="/#roadmap">Roadmap</Link>
               </MenuItem>
-              {/*<MenuItem onClick={handleCloseNavMenu}>
-                <Link href="/adopt">Mint</Link>
-              </MenuItem>*/}
+              <MenuItem onClick={handleCloseNavMenu}>
+                <Link href="/adopt">MINT</Link>
+              </MenuItem>
+              {/*TODO: Add opensea link*/}
               <MenuItem onClick={handleCloseUserMenu}>
                 <Link href="https://twitter.com/MobsCrypto">
                   <FaTwitter />
@@ -165,6 +166,9 @@ export default function Navbar() {
             </MenuItem>
             <MenuItem onClick={handleCloseNavMenu}>
               <Link href="/#roadmap">Roadmap</Link>
+            </MenuItem>
+            <MenuItem onClick={handleCloseNavMenu}>
+              <Link href="/adopt">MINT</Link>
             </MenuItem>
             {/*<MenuItem onClick={handleCloseNavMenu}>
               <Link href="/adopt" scroll={true}>

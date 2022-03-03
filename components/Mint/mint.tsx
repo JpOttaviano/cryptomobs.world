@@ -13,15 +13,20 @@ import MintModal from './mintModal'
 import styles from '../../styles/Home.module.css'
 import caveImage from '../../public/escapecave.png'
 import InfoCard from './infoCard'
-import { Grid } from '@mui/material'
-import { flexbox } from '@mui/system'
+import { Grid, Container, Stack, styled } from '@mui/material'
 
 declare var window: any
 
 const { INFURA_ID } = process.env
 
+const Item = styled(Container)(({ theme }) => ({
+  textAlign: 'center',
+  padding: theme.spacing(4),
+  border: '0',
+}))
+
 // TODO: Update to correct value
-const MAX_AVAIL = 20
+const MAX_AVAIL = 10
 
 const providerOptions = {
   walletconnect: {
@@ -154,39 +159,91 @@ export default function Mint({}) {
   const [minted, setMinted] = React.useState(0)
   const [supply, setSupply] = React.useState(0)
   const [available, setAvailable] = React.useState(0)
+  const [wrongNetwork, setWrongNetwork] = React.useState(false)
+
+  const switchNetwork = useCallback(async function () {
+    const chainId = `0x${Number(1).toString(16)}`
+    // Check if MetaMask is installed
+    // MetaMask injects the global API into window.ethereum
+    if (window.ethereum) {
+      try {
+        // check if the chain to connect to is installed
+        await window.ethereum.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId }], // chainId must be in hexadecimal numbers
+        })
+      } catch (err: any) {
+        // This error code indicates that the chain has not been added to MetaMask
+        // if it is not, then install it into the user MetaMask
+        if (err.code === 4902) {
+          try {
+            await window.ethereum.request({
+              method: 'wallet_addEthereumChain',
+              params: [
+                {
+                  chainName: 'Ethereum',
+                  chainId,
+                  // rpcUrls: ['https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'],
+                  // blockExplorerUrls: ['https://etherscan.io'],
+                  rpcUrls: [
+                    'https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161',
+                  ],
+                },
+              ],
+            })
+          } catch (addError) {
+            console.error(addError)
+          }
+        }
+        console.error(err)
+      }
+    } else {
+      // if no window.ethereum then MetaMask is not installed
+      alert(
+        'MetaMask is not installed. Please consider installing it: https://metamask.io/download.html'
+      )
+    }
+  }, [])
 
   const connect = useCallback(async function () {
     // This is the initial `provider` that is returned when
     // using web3Modal to connect. Can be MetaMask or WalletConnect.
-    // const provider = await web3Modal.connect()
+    const provider = await web3Modal.connect()
 
     // We plug the initial `provider` into ethers.js and get back
     // a Web3Provider. This will add on methods from ethers.js and
     // event listeners such as `.on()` will be different.
 
-    /*const web3Provider = new ethers.providers.Web3Provider(provider)
+    const web3Provider = new ethers.providers.Web3Provider(provider)
 
     const signer = web3Provider.getSigner()
     const address = await signer.getAddress()
 
     const network = await web3Provider.getNetwork()
+
+    if (network.chainId !== 1 && network.chainId !== 1337) {
+      // await swithEthereumChain()
+      setWrongNetwork(true)
+      return
+    }
+
     const balance = Number(
       ethers.utils.formatEther(await web3Provider.getBalance(address))
-    )*/
-
-    const contract = new ethers.Contract(
-      CONTRACT_ADDRESS,
-      CONTRACT_ABI
-      // signer
     )
 
-    // const minted = await contract.balanceOf(address)
-    // setMinted(Number(minted))
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ABI, signer)
+
+    const minted = await contract.balanceOf(address)
+    setMinted(Number(minted))
+
+    const whitelisted = await contract.whitelist(address)
 
     // const bigintsupply = await contract.totalSupply()
-    setSupply(0)
+    setSupply(10000)
 
-    setAvailable(MAX_AVAIL - minted)
+    if (whitelisted === true) {
+      setAvailable(MAX_AVAIL - minted)
+    }
 
     // const greet = (await contract.greet()).toString()
     // setGreet(greet)
@@ -197,10 +254,10 @@ export default function Mint({}) {
       provider,
       web3Provider,
       address,
-      // network: network.name,
-      // chainId: network.chainId,
-      network: 'mainnet',
-      chainId: 0,
+      network: network.name,
+      chainId: network.chainId,
+      // network: 'mainnet',
+      // chainId: 0,
       balance,
       contract,
       signer,
@@ -232,32 +289,33 @@ export default function Mint({}) {
   // here so that when a user switches accounts or networks, we can update the
   // local React state with that new information.
   useEffect(() => {
+    const handleAccountsChanged = (accounts: string[]) => {
+      // eslint-disable-next-line no-console
+      console.log('accountsChanged', accounts)
+      dispatch({
+        type: 'SET_ADDRESS',
+        address: accounts[0],
+      })
+      window.location.reload()
+    }
+
+    // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
+    const handleChainChanged = (_hexChainId: string) => {
+      window.location.reload()
+    }
+
+    const handleDisconnect = (error: { code: number; message: string }) => {
+      // eslint-disable-next-line no-console
+      console.log('disconnect', error)
+      disconnect()
+      window.location.reload()
+    }
+
+    window.ethereum.on('accountsChanged', handleAccountsChanged)
+    window.ethereum.on('chainChanged', handleChainChanged)
+    window.ethereum.on('disconnect', handleDisconnect)
     if (provider?.on) {
-      const handleAccountsChanged = (accounts: string[]) => {
-        // eslint-disable-next-line no-console
-        console.log('accountsChanged', accounts)
-        dispatch({
-          type: 'SET_ADDRESS',
-          address: accounts[0],
-        })
-        window.location.reload()
-      }
-
-      // https://docs.ethers.io/v5/concepts/best-practices/#best-practices--network-changes
-      const handleChainChanged = (_hexChainId: string) => {
-        window.location.reload()
-      }
-
-      const handleDisconnect = (error: { code: number; message: string }) => {
-        // eslint-disable-next-line no-console
-        console.log('disconnect', error)
-        disconnect()
-        window.location.reload()
-      }
-
-      // window.ethereum.on('accountsChanged', handleAccountsChanged)
-
-      /*provider.on('accountsChanged', handleAccountsChanged)
+      provider.on('accountsChanged', handleAccountsChanged)
       provider.on('chainChanged', handleChainChanged)
       provider.on('disconnect', handleDisconnect)
 
@@ -270,7 +328,7 @@ export default function Mint({}) {
           provider.removeListener('chainChanged', handleChainChanged)
           provider.removeListener('disconnect', handleDisconnect)
         }
-      }*/
+      }
     }
   }, [provider, disconnect])
 
@@ -278,12 +336,31 @@ export default function Mint({}) {
     <div className={styles.description}>
       <Grid container={true} spacing={10} direction="column">
         <Grid item={true} />
+
         <Grid item={true}>
-          <Button onClick={disconnect}>Disconect</Button>
+          <p className={styles.description}> Adopt-a-Mob is live!</p>
         </Grid>
         <Grid item={true}>
-          {false ? (
-            <Button onClick={connect}>Connect</Button>
+          {wrongNetwork === true ? (
+            <div>
+              <h2>Wrong network. Please switch to Ethereum Mainnet network.</h2>
+              <Button variant="contained" onClick={switchNetwork}>
+                Switch to Ethereum Network
+              </Button>
+            </div>
+          ) : !provider ? (
+            <div>
+              <Stack>
+                <Item>
+                  <div>Connect your wallet to start minting</div>
+                </Item>
+                <Item>
+                  <Button variant="contained" onClick={connect}>
+                    Connect
+                  </Button>
+                </Item>
+              </Stack>
+            </div>
           ) : (
             <div>
               <Grid
@@ -291,13 +368,12 @@ export default function Mint({}) {
                 direction="row"
                 spacing={15}
                 className={styles.mintcontent}
-                wrap="nowrap"
               >
                 <Grid item={true}>
                   <InfoCard
                     elem={
                       <div>
-                        <h1>Total minted</h1>
+                        <h1>Total supply</h1>
                         <h1>{supply}</h1>
                       </div>
                     }
@@ -308,7 +384,7 @@ export default function Mint({}) {
                     elem={
                       <div>
                         <h1>You Own</h1>
-                        <h1>{balance}</h1>
+                        <h1>{minted}</h1>
                       </div>
                     }
                   />
@@ -317,7 +393,7 @@ export default function Mint({}) {
                   <InfoCard
                     elem={
                       <div>
-                        <h1>Available</h1>
+                        <h1>You can mint</h1>
                         <h1>{available}</h1>
                       </div>
                     }
@@ -332,7 +408,7 @@ export default function Mint({}) {
               >
                 <Grid item={true}>
                   <h1> Your Address</h1>
-                  0x06012c8cf97BEaD5deAe237070F9587f8E7A266d
+                  {address}
                 </Grid>
                 <Grid item={true}>
                   <h1>Contract Address</h1>
@@ -352,14 +428,20 @@ export default function Mint({}) {
                 className={styles.mintcontent}
               >
                 <Grid item={true}>
-                  <MintModal
-                    provider={web3Provider}
-                    contract={contract}
-                    signer={signer}
-                  />
+                  {available > 0 ? (
+                    <MintModal
+                      provider={web3Provider}
+                      contract={contract}
+                      signer={signer}
+                    />
+                  ) : (
+                    <div>Your address has no mints available</div>
+                  )}
                 </Grid>
                 <Grid item={true}>
-                  <Button onClick={disconnect}>Disconect</Button>
+                  <Button variant="contained" onClick={disconnect}>
+                    Disconnect
+                  </Button>
                 </Grid>
               </Grid>
             </div>

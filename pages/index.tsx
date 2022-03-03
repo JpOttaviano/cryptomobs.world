@@ -28,6 +28,10 @@ const imgRes = {
   height: 1350,
 }
 
+const GreenLink = styled.a`
+  color: #40f72f;
+`
+
 const PurpleLink = styled.a`
   color: violet;
 `
@@ -151,8 +155,17 @@ const Home: NextPage = () => {
                   </Grid>
                   <Grid item={true}>
                     <h2>When will mint start?</h2>
-                    Whitelist mint: 3rd March 2022
-                    <br />
+                    Whitelist mint:
+                    <Link href={'/adopt'} passHref={true}>
+                      <GreenLink> OPEN</GreenLink>
+                    </Link>
+                    <p />
+                    <Button variant="contained">
+                      <Link href={'/adopt'} passHref={true}>
+                        MINT
+                      </Link>
+                    </Button>
+                    <p />
                     Public mint: 7th March 2022
                   </Grid>
 
@@ -217,7 +230,7 @@ const Home: NextPage = () => {
                       href={'https://discord.gg/jshSquFwUF'}
                       passHref={true}
                     >
-                      <PurpleLink> Discord</PurpleLink>
+                      <PurpleLink> Discord </PurpleLink>
                     </Link>{' '}
                     server to get whitelisted, updates and more information
                     about the project.
