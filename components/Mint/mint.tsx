@@ -11,7 +11,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from './contract'
 import WalletConnectProvider from '@walletconnect/web3-provider'
 import MintModal from './mintModal'
 import styles from '../../styles/Home.module.css'
-import caveImage from '../../public/escapecave.png'
+// import caveImage from '../../public/escapecave.png'
 import InfoCard from './infoCard'
 import { Grid, Container, Stack, styled } from '@mui/material'
 
@@ -26,7 +26,7 @@ const Item = styled(Container)(({ theme }) => ({
 }))
 
 // TODO: Update to correct value
-const MAX_AVAIL = 10
+// const MAX_AVAIL = 10
 
 const providerOptions = {
   walletconnect: {
@@ -158,7 +158,7 @@ export default function Mint({}) {
   } = state
   const [minted, setMinted] = React.useState(0)
   const [supply, setSupply] = React.useState(0)
-  const [available, setAvailable] = React.useState(0)
+  // const [available, setAvailable] = React.useState(0)
   const [wrongNetwork, setWrongNetwork] = React.useState(false)
 
   const switchNetwork = useCallback(async function () {
@@ -236,14 +236,14 @@ export default function Mint({}) {
     const minted = await contract.balanceOf(address)
     setMinted(Number(minted))
 
-    const whitelisted = await contract.whitelist(address)
+    // const whitelisted = await contract.whitelist(address)
 
     // const bigintsupply = await contract.totalSupply()
     setSupply(10000)
 
-    if (whitelisted === true) {
+    /*if (whitelisted === true) {
       setAvailable(MAX_AVAIL - minted)
-    }
+    }*/
 
     // const greet = (await contract.greet()).toString()
     // setGreet(greet)
@@ -389,16 +389,6 @@ export default function Mint({}) {
                     }
                   />
                 </Grid>
-                <Grid item={true}>
-                  <InfoCard
-                    elem={
-                      <div>
-                        <h1>You can mint</h1>
-                        <h1>{available}</h1>
-                      </div>
-                    }
-                  />
-                </Grid>
               </Grid>
               <Grid
                 container={true}
@@ -428,15 +418,11 @@ export default function Mint({}) {
                 className={styles.mintcontent}
               >
                 <Grid item={true}>
-                  {available > 0 ? (
-                    <MintModal
-                      provider={web3Provider}
-                      contract={contract}
-                      signer={signer}
-                    />
-                  ) : (
-                    <div>Your address has no mints available</div>
-                  )}
+                  <MintModal
+                    provider={web3Provider}
+                    contract={contract}
+                    signer={signer}
+                  />
                 </Grid>
                 <Grid item={true}>
                   <Button variant="contained" onClick={disconnect}>
