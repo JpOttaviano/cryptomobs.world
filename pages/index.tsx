@@ -28,6 +28,10 @@ const imgRes = {
   height: 1350,
 }
 
+const RedLink = styled.a`
+  color: #a70c0c;
+`
+
 const GreenLink = styled.a`
   color: #40f72f;
 `
@@ -155,7 +159,9 @@ const Home: NextPage = () => {
                   </Grid>
                   <Grid item={true}>
                     <h2>When will mint start?</h2>
-                    Whitelist mint:
+                    Whitelist mint: <RedLink>Finished</RedLink>
+                    <p />
+                    Public mint:{' '}
                     <Link href={'/adopt'} passHref={true}>
                       <GreenLink> OPEN</GreenLink>
                     </Link>
@@ -165,12 +171,10 @@ const Home: NextPage = () => {
                         MINT
                       </Link>
                     </Button>
-                    <p />
-                    Public mint: 7th March 2022
                   </Grid>
 
                   <Grid item={true}>
-                    <h2>How much will it cost?</h2>
+                    <h2>How much does it cost?</h2>
                     0.03 ETH
                   </Grid>
                   <Grid item={true}>
